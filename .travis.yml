@@ -43,7 +43,7 @@ before_script:
 
 script:
 #Create Scratch Org
-- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
 - sfdx force:org:display --targetusername ciorg
 #Push Source Scratch Org
 - sfdx force:source:push --targetusername ciorg
@@ -56,7 +56,7 @@ script:
 - sleep 300 # Wait for package replication.
 - echo ${PACKAGEVERSION}
 #Create Scratch Org
-- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
 - sfdx force:org:display --targetusername installorg
 #Install package in Scratch Org
 - sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
