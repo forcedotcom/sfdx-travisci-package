@@ -45,7 +45,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 13) Create the first package version `sfdx force:package:version:create --package "Travis CI" --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg`
 
-14) In the .travis.myl Update the value in the `PACKAGENAME` variable to be Package Id in your sfdx-project.json file.  This id will start with 0Ho.
+14) In the .travis.yml Update the value in the `PACKAGENAME` variable to be Package Id in your sfdx-project.json file.  This id will start with 0Ho.
 
 15) Commit the updated sfdx-project.json and .travis.yml files.
 
