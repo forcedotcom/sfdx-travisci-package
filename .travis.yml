@@ -18,50 +18,50 @@ before_install:
 - export SFDX_LOG_LEVEL=DEBUG
 #Create SFDX directory
 - mkdir sfdx
-#Install SFDX
+#Install Salesforce CLI
 - wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
 
 before_script:
 #
-# The before_script step initializes varibles used in the script step and authenticates to the devhub using JWT grant
+# The before_script step initializes variables used in the script step and authenticates to the Dev Hub using JWT-based flow
 #
 
 #Assign variables
 - export ROOTDIR=force-app/main/default/
 - export TESTLEVEL=RunLocalTests
-#Be sure to update the package ID (Package Id will start with 0Ho) or package alias here from the sfdx-project.json file
+#Be sure to update the package ID (package ID starts with OHo) or package alias here from the sfdx-project.json file
 - export PACKAGENAME="0Ho0N000000CaT3SAK"
 - export PACKAGEVERSION=""
 #outputs CLI version
 - sfdx --version
 #outputs salsforcedx plugin version
 - sfdx plugins --core
-#Authorize DevHub
+#Authorize Dev Hub
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername --setalias HubOrg
 
 script:
-#Create Scratch Org
+#Create scratch org
 - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
 - sfdx force:org:display --targetusername ciorg
-#Push Source Scratch Org
+#Push source to scratch org
 - sfdx force:source:push --targetusername ciorg
-#Run Unit Tests on Scratch Org
+#Run unit tests on scratch org
 - sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
-#Delete Scratch Org
+#Delete scratch org
 - sfdx force:org:delete --targetusername ciorg --noprompt
-#Create Package Version
+#Create package version
 - PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
 - echo "Package Version Id - "${PACKAGEVERSION}
 - echo "Waiting for 5 minutes for package replication"
 - sleep 5m
-#Create Scratch Org
+#Create scratch org
 - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
 - sfdx force:org:display --targetusername installorg
-#Install package in Scratch Org
+#Install package in scratch org
 - sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
-#Run Unit Tests on Scratch Org
+#Run unit tests on scratch org
 - sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
-#Delete Scratch Org
+#Delete scratch org
 - sfdx force:org:delete --targetusername installorg --noprompt
