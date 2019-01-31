@@ -12,7 +12,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 ## Getting Started
 
-1) Make sure you have the Salesforce CLI installed. Check by running `sfdx force --help` and confirm you see the command output. If you don't have it installed you can download and install it from [here](https://developer.salesforce.com/tools/sfdxcli).
+1) Make sure you have the Salesforce CLI installed. Check by running `sfdx force --help` and confirm you see the command output. If you don't have it installed, you can download and install it from [here](https://developer.salesforce.com/tools/sfdxcli).
 
 2) [Fork](http://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
 
@@ -25,14 +25,14 @@ If any any of these assumptions aren't true, the following steps won't work.
 
    **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
 
-6) From you JWT-Based connected app on Salesforce, retrieve the generated `Consumer Key`.
+6) From your JWT-Based connected app on Salesforce, retrieve the generated `Consumer Key`.
 
 7) Set your `Consumer Key` and `Username` using the Travis CLI. Note that this username is the username that you use to access your Dev Hub.
 
     travis env set USERNAME <your_username>
     travis env set CONSUMERKEY <your_consumer_key>
 
-8) Locate your `server.key` that you generated previously and keep track of it's location.
+8) Locate your `server.key` that you generated previously and keep track of its location.
 
 9) Open the `.travis.yml` file and remove the first line that starts with `openssl ...` and save the file.
 
