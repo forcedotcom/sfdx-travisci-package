@@ -8,6 +8,9 @@ This repository shows one way you can successfully use scratch orgs to create ne
 - You've installed the [Travis CLI](https://github.com/travis-ci/travis.rb#installation). 
 - You have properly set up JWT-based authorization flow (headless). We recommend using [these steps for generating your self-signed SSL certificate](https://devcenter.heroku.com/articles/ssl-certificate-self). 
 
+## Warning to Windows Users
+Travis CI has a [decryption issue you should check to see if has been resolved](https://github.com/travis-ci/travis-ci/issues/4746) before proceeding.
+
 ## Getting Started
 
 1) Make sure that you have Salesforce CLI installed. Run `sfdx force --help` and confirm you see the command output. If you don't have it installed, you can download and install it from [here](https://developer.salesforce.com/tools/sfdxcli).
@@ -27,7 +30,7 @@ This repository shows one way you can successfully use scratch orgs to create ne
 
 7) Set your `Consumer Key` and `Username` using the Travis CLI. Note that this username is the username that you use to access your Dev Hub.
 
-    travis env set USERNAME <your_username>
+    travis env set USERNAME <your_username>\
     travis env set CONSUMERKEY <your_consumer_key>
 
 8) Locate the generated `server.key` and keep track of its location.
