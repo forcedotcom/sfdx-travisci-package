@@ -1,27 +1,27 @@
 #Gives permission to install Salesforce CLI
 sudo: true
 
-before_install:
+bbefore_install:
 #
 # The before_install steps downloads Salesforce CLI and installs it
 #
 
-#Decrypt server key
-- openssl aes-256-cbc -K $encrypted_b105d3438aa4_key -iv $encrypted_b105d3438aa4_iv
-  -in assets/server.key.enc -out assets/server.key -d
-#Assign variables
+#Assign variables    
 - export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 - export SFDX_DISABLE_APP_HUB=true
 - export SFDX_LOG_LEVEL=DEBUG
-#Create SFDX directory
-- mkdir sfdx
+#Create sfdx directory
+- mkdir ~/sfdx
 #Install Salesforce CLI
-- wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
-- "./sfdx/install"
-- export PATH=./sfdx/$(pwd):$PATH
+- if [ -z ${DX_CLI_URL_CUSTOM+x} ]; then echo "Using latest sfdx build"; wget -qO- $CLIURL | tar xJ -C ~/sfdx --strip-components 1; else echo "Using custom sfdx build"; wget -qO- $DX_CLI_URL_CUSTOM | tar xJ -C ~/sfdx --strip-components 1; fi
+- export PATH=~/sfdx/bin:$PATH
+- sfdx --version
+
+#Decrypt server key
+- openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
 
 before_script:
 #
