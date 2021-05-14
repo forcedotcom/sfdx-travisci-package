@@ -1,7 +1,7 @@
 #Gives permission to install Salesforce CLI
 sudo: true
 
-bbefore_install:
+before_install:
 #
 # The before_install steps downloads Salesforce CLI and installs it
 #
